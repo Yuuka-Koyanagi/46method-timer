@@ -23,8 +23,14 @@ export const SettingsModal = ({ settings, closeSettings }: SettingsModalProps) =
   } = settings;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md shadow-lg">
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
+      onClick={closeSettings}
+    >
+      <div
+        className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md shadow-lg"
+        onClick={e => e.stopPropagation()}
+      >
         <dl className="mb-4 space-y-2">
           <dt className="font-semibold">抽出メソッド</dt>
           <dd>
