@@ -22,63 +22,77 @@ export const SettingsModal = ({ settings, closeSettings }: SettingsModalProps) =
     handlePourCountChange,
   } = settings;
 
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      closeSettings();
+    }
+  };
+
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
-      onClick={closeSettings}
+      className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 backdrop-blur-sm"
+      onClick={handleBackdropClick}
     >
       <div
-        className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md shadow-lg"
-        onClick={e => e.stopPropagation()}
+        className="bg-white dark:bg-gray-800 rounded-2xl py-12 px-9 w-[400px] h-[400px] shadow-xl transform transition-all duration-300 ease-in-out mx-6 my-24 flex flex-col items-center justify-center"
+        onClick={(e) => e.stopPropagation()}
       >
-        <dl className="mb-4 space-y-2">
-          <dt className="font-semibold">抽出メソッド</dt>
-          <dd>
-            <button
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-              onClick={toggleBrewingMethod}
-            >
-              {brewingMethod}
-            </button>
-          </dd>
+        <div className="space-y-48 w-full max-w-[300px] mx-auto">
+          <div className="space-y-9 mb-48">
+            <label className="block text-2xl font-medium text-gray-700 dark:text-gray-300">抽出メソッド</label>
+            <div className="flex items-center gap-6">
+              <button
+                onClick={() => toggleBrewingMethod()}
+                className="min-w-[300px] px-9 py-6 rounded-lg text-2xl font-medium transition-colors border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
+              >
+                {brewingMethod}
+              </button>
+            </div>
+          </div>
 
-          <dt className="font-semibold">抽出量</dt>
-          <dd className="flex items-center gap-2">
-            <input
-              type="number"
-              value={amount}
-              onChange={handleAmountChange}
-              step={50}
-              min={50}
-              max={1000}
-              inputMode="numeric"
-              className="border px-2 py-1 rounded w-full"
-            />
-            <span>ml</span>
-          </dd>
+          <div className="space-y-9 mb-48">
+            <label className="block text-2xl font-medium text-gray-700 dark:text-gray-300">抽出量</label>
+            <div className="flex items-center gap-6">
+              <input
+                type="number"
+                value={amount}
+                onChange={handleAmountChange}
+                step={50}
+                min={50}
+                max={1000}
+                inputMode="numeric"
+                className="w-1/3 border border-gray-300 dark:border-gray-600 px-9 py-6 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-2xl"
+              />
+              <span className="text-gray-600 dark:text-gray-400 text-2xl">ml</span>
+            </div>
+          </div>
 
-          <dt className="font-semibold">投数</dt>
-          <dd className="flex items-center gap-2">
-            <input
-              type="number"
-              value={pourCount}
-              onChange={handlePourCountChange}
-              step={1}
-              min={1}
-              max={10}
-              inputMode="numeric"
-              className="border px-2 py-1 rounded w-full"
-            />
-            <span>投</span>
-          </dd>
-        </dl>
+          <div className="space-y-9">
+            <label className="block text-2xl font-medium text-gray-700 dark:text-gray-300">投数</label>
+            <div className="flex items-center gap-6">
+              <input
+                type="number"
+                value={pourCount}
+                onChange={handlePourCountChange}
+                step={1}
+                min={1}
+                max={10}
+                inputMode="numeric"
+                className="w-1/3 border border-gray-300 dark:border-gray-600 px-9 py-6 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-2xl"
+              />
+              <span className="text-gray-600 dark:text-gray-400 text-2xl">投</span>
+            </div>
+          </div>
+        </div>
 
-        <div className="flex justify-center">
+        <div className="flex justify-end mt-18">
           <button
-            className="text-3xl hover:brightness-70 transition"
+            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
             onClick={closeSettings}
           >
-            ✅
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
           </button>
         </div>
       </div>
