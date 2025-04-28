@@ -22,7 +22,6 @@ export const TimerDisplay: React.FC = () => {
     if (isRunning) {
       const animate = () => {
         const now = Date.now();
-        const deltaTime = now - lastTimeRef.current;
         lastTimeRef.current = now;
 
         // 現在の進捗から目標の進捗まで滑らかに移動
