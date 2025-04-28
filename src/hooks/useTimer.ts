@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react";
+import { useSettings } from "./useSettings";
 
 export const useTimer = () => {
+  const { settings } = useSettings();
+  const { amount, pourCount } = settings;
+
+  // 1投あたりの時間を計算（秒単位）
+  const initialTime = Math.floor(amount / pourCount);
   const [isRunning, setIsRunning] = useState(false);
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState(initialTime);
   const [totalTime, setTotalTime] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
 
@@ -11,7 +17,13 @@ export const useTimer = () => {
 
     if (isRunning) {
       intervalId = setInterval(() => {
-        setTime((prevTime) => prevTime + 1);
+        setTime((prevTime) => {
+          if (prevTime <= 0) {
+            setIsRunning(false);
+            return 0;
+          }
+          return prevTime - 1;
+        });
       }, 1000);
     }
 
