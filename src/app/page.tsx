@@ -31,7 +31,7 @@ const Timer = () => {
       </div>
 
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-8">
-        <div className="relative w-[512px] h-[512px] mb-16">
+        <div className="relative w-[256px] h-[256px] mb-16">
           <svg className="w-full h-full" viewBox="0 0 100 100">
             <circle
               className="text-gray-200 dark:text-gray-200"
@@ -55,7 +55,7 @@ const Timer = () => {
               cy="50"
             />
           </svg>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl font-bold text-gray-600 dark:text-white">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-bold text-gray-600 dark:text-white">
             00:00
           </div>
         </div>
