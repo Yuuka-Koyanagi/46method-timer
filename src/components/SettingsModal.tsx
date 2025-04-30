@@ -75,7 +75,7 @@ export const SettingsModal = ({ settings, closeSettings }: SettingsModalProps) =
                 value={pourCount}
                 onChange={handlePourCountChange}
                 step={1}
-                min={1}
+                min={3}
                 max={10}
                 inputMode="numeric"
                 className="w-1/3 border border-gray-300 dark:border-gray-600 px-9 py-6 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-2xl"
