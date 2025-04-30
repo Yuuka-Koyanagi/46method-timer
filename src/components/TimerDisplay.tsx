@@ -22,14 +22,6 @@ export const TimerDisplay: React.FC = () => {
 
   // タイマーが終了した時（currentPourが変更された時）にアニメーションをリセット
   useEffect(() => {
-    console.log('タイマー終了時の値:', {
-      currentPour,
-      time,
-      totalTime,
-      displayProgress,
-      progressRef: progressRef.current,
-      lastProgressRef: lastProgressRef.current
-    });
     // すべての進捗度をリセット
     setDisplayProgress(0);
     progressRef.current = 0;
