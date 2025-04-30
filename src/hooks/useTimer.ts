@@ -3,14 +3,24 @@ import { useSettings } from "./useSettings";
 
 export const useTimer = () => {
   const { settings } = useSettings();
-  const { amount, pourCount } = settings;
+  const { pourCount } = settings;
 
-  // 1投あたりの時間を計算（秒単位）
-  const initialTime = Math.floor(amount / pourCount);
+  // 現在の投数を追跡
+  const [currentPour, setCurrentPour] = useState(1);
   const [isRunning, setIsRunning] = useState(false);
-  const [time, setTime] = useState(initialTime);
+  const [time, setTime] = useState(45); // 初期値は45秒
   const [totalTime, setTotalTime] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
+
+  // 各投数に応じた時間を計算
+  const calculateTimeForPour = (pourNumber: number) => {
+    if (pourNumber <= 2) {
+      return 45; // 1,2回目は45秒固定
+    } else {
+      const remainingPours = pourCount - 2; // 3投目以降の残り投数
+      return Math.floor(120 / remainingPours); // 120秒を残り投数で割る
+    }
+  };
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
@@ -20,7 +30,8 @@ export const useTimer = () => {
         setTime((prevTime) => {
           if (prevTime <= 0) {
             setIsRunning(false);
-            return 0;
+            setCurrentPour(prev => prev + 1);
+            return calculateTimeForPour(currentPour + 1);
           }
           return prevTime - 1;
         });
@@ -32,7 +43,7 @@ export const useTimer = () => {
         clearInterval(intervalId);
       }
     };
-  }, [isRunning]);
+  }, [isRunning, currentPour]);
 
   useEffect(() => {
     let totalIntervalId: NodeJS.Timeout;
@@ -69,5 +80,6 @@ export const useTimer = () => {
     totalTime,
     formatTime,
     toggleTimer,
+    currentPour,
   };
 }; 
