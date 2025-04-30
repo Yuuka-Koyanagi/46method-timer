@@ -22,6 +22,15 @@ export const useTimer = () => {
     }
   };
 
+  // タイマーをリセットする関数
+  const resetTimer = () => {
+    setCurrentPour(1);
+    setTime(calculateTimeForPour(1)); // 1投目の時間を計算
+    setTotalTime(0);
+    setHasStarted(false);
+    setIsRunning(false);
+  };
+
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
@@ -31,6 +40,8 @@ export const useTimer = () => {
           if (prevTime <= 0) {
             setIsRunning(false);
             setCurrentPour(prev => prev + 1);
+            setTotalTime(0);
+            setHasStarted(false); // hasStartedもリセット
             return calculateTimeForPour(currentPour + 1);
           }
           return prevTime - 1;
@@ -48,7 +59,7 @@ export const useTimer = () => {
   useEffect(() => {
     let totalIntervalId: NodeJS.Timeout;
 
-    if (hasStarted) {
+    if (hasStarted && isRunning) {
       totalIntervalId = setInterval(() => {
         setTotalTime((prevTotalTime) => prevTotalTime + 1);
       }, 1000);
@@ -59,7 +70,7 @@ export const useTimer = () => {
         clearInterval(totalIntervalId);
       }
     };
-  }, [hasStarted]);
+  }, [hasStarted, isRunning]);
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -69,6 +80,7 @@ export const useTimer = () => {
 
   const toggleTimer = () => {
     if (!hasStarted) {
+      resetTimer();
       setHasStarted(true);
     }
     setIsRunning(!isRunning);
@@ -81,5 +93,7 @@ export const useTimer = () => {
     formatTime,
     toggleTimer,
     currentPour,
+    resetTimer,
+    pourCount,
   };
 }; 

@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTimer } from '@/hooks/useTimer';
 
 export const TimerDisplay: React.FC = () => {
-  const { isRunning, time, totalTime, formatTime, toggleTimer } = useTimer();
+  const { isRunning, time, totalTime, formatTime, toggleTimer, currentPour, pourCount } = useTimer();
   const [displayProgress, setDisplayProgress] = useState(0);
   const animationFrameRef = useRef<number | undefined>(undefined);
   const lastTimeRef = useRef<number>(Date.now());
   const progressRef = useRef<number>(0);
+  const lastProgressRef = useRef<number>(0);
 
   // 円の円周（2πr）
   const circumference = 251.2;
@@ -16,7 +17,30 @@ export const TimerDisplay: React.FC = () => {
     const initialTime = time + totalTime;
     const targetProgress = time / initialTime; // 残り時間の割合を計算
     progressRef.current = targetProgress;
+    lastProgressRef.current = targetProgress;
   }, [time, totalTime]);
+
+  // タイマーが終了した時（currentPourが変更された時）にアニメーションをリセット
+  useEffect(() => {
+    console.log('タイマー終了時の値:', {
+      currentPour,
+      time,
+      totalTime,
+      displayProgress,
+      progressRef: progressRef.current,
+      lastProgressRef: lastProgressRef.current
+    });
+    // すべての進捗度をリセット
+    setDisplayProgress(0);
+    progressRef.current = 0;
+    lastProgressRef.current = 0;
+
+    // アニメーションフレームをキャンセル
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = undefined;
+    }
+  }, [currentPour]);
 
   useEffect(() => {
     if (isRunning) {
@@ -37,7 +61,7 @@ export const TimerDisplay: React.FC = () => {
       animationFrameRef.current = requestAnimationFrame(animate);
     } else {
       // タイマーが停止している場合は、現在の進捗を維持
-      setDisplayProgress(prevProgress => prevProgress);
+      setDisplayProgress(progressRef.current);
     }
 
     return () => {
@@ -56,6 +80,11 @@ export const TimerDisplay: React.FC = () => {
         <span className="text-gray-600 dark:text-gray-400 text-2xl">
           Total Time: <time dateTime={`PT${totalTime}S`}>{formatTime(totalTime)}</time>
         </span>
+        <div className="mt-2">
+          <span className="text-gray-600 dark:text-gray-400 text-2xl">
+            注湯回数: {currentPour} / {pourCount}
+          </span>
+        </div>
       </div>
 
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-8">
@@ -107,6 +136,8 @@ export const TimerDisplay: React.FC = () => {
                 strokeWidth="8"
                 stroke="currentColor"
                 fill="transparent"
+                strokeDasharray={circumference}
+                strokeDashoffset={strokeDashoffset}
                 r="40"
                 cx="50"
                 cy="50"
