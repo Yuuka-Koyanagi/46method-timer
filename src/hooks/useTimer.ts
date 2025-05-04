@@ -38,7 +38,11 @@ export const useTimer = () => {
         setTime((prevTime) => {
           if (prevTime <= 0) {
             setIsRunning(false);
-            return calculateTimeForPour(currentPour);
+            const nextPour = currentPour + 1;
+            const newPour = nextPour > pourCount ? 1 : nextPour;
+            setCurrentPour(newPour);
+            setTime(calculateTimeForPour(newPour));
+            return 0;
           }
           return prevTime - 1;
         });
@@ -50,7 +54,7 @@ export const useTimer = () => {
         clearInterval(intervalId);
       }
     };
-  }, [isRunning, currentPour]);
+  }, [isRunning, currentPour, pourCount]);
 
   useEffect(() => {
     let totalIntervalId: NodeJS.Timeout;
