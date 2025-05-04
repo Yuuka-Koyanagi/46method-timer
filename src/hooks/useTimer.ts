@@ -6,7 +6,7 @@ export const useTimer = () => {
   const { pourCount } = settings;
 
   // 現在の投数を追跡
-  const [currentPour, setCurrentPour] = useState(1);
+  const [currentPour, setCurrentPour] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [time, setTime] = useState(45); // 初期値は45秒
   const [totalTime, setTotalTime] = useState(0);
@@ -14,18 +14,18 @@ export const useTimer = () => {
 
   // 各投数に応じた時間を計算
   const calculateTimeForPour = (pourNumber: number) => {
-    if (pourNumber <= 2) {
-      return 45; // 1,2回目は45秒固定
+    if (pourNumber <= 1) {
+      return 45; // 0,1回目は45秒固定
     } else {
-      const remainingPours = pourCount - 2; // 3投目以降の残り投数
+      const remainingPours = pourCount - 2; // 2投目以降の残り投数
       return Math.floor(120 / remainingPours); // 120秒を残り投数で割る
     }
   };
 
   // タイマーをリセットする関数
   const resetTimer = () => {
-    setCurrentPour(1);
-    setTime(calculateTimeForPour(1)); // 1投目の時間を計算
+    setCurrentPour(0);
+    setTime(calculateTimeForPour(0)); // 0投目の時間を計算
     setTotalTime(0);
     setHasStarted(false);
     setIsRunning(false);
