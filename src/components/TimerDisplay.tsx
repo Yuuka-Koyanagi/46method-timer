@@ -74,7 +74,7 @@ export const TimerDisplay: React.FC = () => {
         </span>
         <div className="mt-2">
           <span className="text-gray-600 dark:text-gray-400 text-2xl">
-            注湯回数: {currentPour} / {pourCount}
+            {currentPour} / {pourCount} 投目
           </span>
         </div>
       </div>
