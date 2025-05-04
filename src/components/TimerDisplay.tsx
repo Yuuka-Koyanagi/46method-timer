@@ -70,7 +70,7 @@ export const TimerDisplay: React.FC = () => {
     <>
       <div className="fixed top-0 left-0 p-6">
         <span className="text-gray-600 dark:text-gray-400 text-2xl">
-          合計抽出時間: <time dateTime={`PT${totalTime}S`}>{formatTime(totalTime)}</time>
+          合計抽出時間: <time dateTime={`PT${totalTime}S`}>{formatTime(totalTime, true)}</time>
         </span>
         <div className="mt-2">
           <span className="text-gray-600 dark:text-gray-400 text-2xl">

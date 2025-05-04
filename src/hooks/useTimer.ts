@@ -72,10 +72,13 @@ export const useTimer = () => {
     };
   }, [hasStarted]);
 
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  const formatTime = (seconds: number, isTotalTime: boolean = false) => {
+    if (isTotalTime) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+    }
+    return seconds.toString().padStart(2, '0');
   };
 
   const toggleTimer = () => {
