@@ -76,8 +76,6 @@ export const useTimer = () => {
 
   const toggleTimer = () => {
     if (!hasStarted) {
-      setCurrentPour(0);
-      setTime(calculateTimeForPour(0));
       setHasStarted(true);
     }
     setIsRunning(!isRunning);
