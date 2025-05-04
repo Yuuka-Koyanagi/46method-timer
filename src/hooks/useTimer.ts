@@ -26,7 +26,6 @@ export const useTimer = () => {
   const resetTimer = () => {
     setCurrentPour(0);
     setTime(calculateTimeForPour(0)); // 0投目の時間を計算
-    setTotalTime(0);
     setHasStarted(false);
     setIsRunning(false);
   };
@@ -39,8 +38,6 @@ export const useTimer = () => {
         setTime((prevTime) => {
           if (prevTime <= 0) {
             setIsRunning(false);
-            setTotalTime(0);
-            setHasStarted(false); // hasStartedもリセット
             return calculateTimeForPour(currentPour);
           }
           return prevTime - 1;
@@ -58,7 +55,7 @@ export const useTimer = () => {
   useEffect(() => {
     let totalIntervalId: NodeJS.Timeout;
 
-    if (hasStarted && isRunning) {
+    if (hasStarted) {
       totalIntervalId = setInterval(() => {
         setTotalTime((prevTotalTime) => prevTotalTime + 1);
       }, 1000);
@@ -69,7 +66,7 @@ export const useTimer = () => {
         clearInterval(totalIntervalId);
       }
     };
-  }, [hasStarted, isRunning]);
+  }, [hasStarted]);
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -79,7 +76,8 @@ export const useTimer = () => {
 
   const toggleTimer = () => {
     if (!hasStarted) {
-      resetTimer();
+      setCurrentPour(0);
+      setTime(calculateTimeForPour(0));
       setHasStarted(true);
     }
     setIsRunning(!isRunning);
