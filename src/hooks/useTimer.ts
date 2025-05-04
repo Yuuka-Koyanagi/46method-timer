@@ -39,10 +39,9 @@ export const useTimer = () => {
         setTime((prevTime) => {
           if (prevTime <= 0) {
             setIsRunning(false);
-            setCurrentPour(prev => prev + 1);
             setTotalTime(0);
             setHasStarted(false); // hasStartedもリセット
-            return calculateTimeForPour(currentPour + 1);
+            return calculateTimeForPour(currentPour);
           }
           return prevTime - 1;
         });
