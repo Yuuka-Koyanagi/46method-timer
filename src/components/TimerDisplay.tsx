@@ -137,7 +137,7 @@ export const TimerDisplay: React.FC = () => {
               />
             )}
           </svg>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-bold text-gray-600 dark:text-white">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl font-bold text-gray-600 dark:text-white">
             {formatTime(time)}
           </div>
         </div>
