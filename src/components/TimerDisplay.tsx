@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTimer } from '@/hooks/useTimer';
+import { ResultModal } from './ResultModal';
 
 export const TimerDisplay: React.FC = () => {
-  const { isRunning, time, totalTime, formatTime, toggleTimer, currentPour, pourCount } = useTimer();
+  const { isRunning, time, totalTime, formatTime, toggleTimer, currentPour, pourCount, isFinished } = useTimer();
   const [displayProgress, setDisplayProgress] = useState(0);
   const animationFrameRef = useRef<number | undefined>(undefined);
   const lastTimeRef = useRef<number>(Date.now());
@@ -18,6 +19,7 @@ export const TimerDisplay: React.FC = () => {
     const targetProgress = time / initialTime; // 残り時間の割合を計算
     progressRef.current = targetProgress;
     lastProgressRef.current = targetProgress;
+    console.log(displayProgress);
   }, [time, totalTime]);
 
   // タイマーが終了した時（currentPourが変更された時）にアニメーションをリセット
@@ -43,7 +45,7 @@ export const TimerDisplay: React.FC = () => {
         // 現在の進捗から目標の進捗まで滑らかに移動
         setDisplayProgress(prevProgress => {
           const diff = progressRef.current - prevProgress;
-          const newProgress = prevProgress + diff * 0.05; // 補間係数を小さくしてより滑らかに
+          const newProgress = prevProgress + diff * 0.05;
           return newProgress;
         });
 
@@ -68,13 +70,14 @@ export const TimerDisplay: React.FC = () => {
 
   return (
     <>
+      {isFinished && <ResultModal />}
       <div className="fixed top-0 left-0 p-6">
         <span className="text-gray-600 dark:text-gray-400 text-2xl">
-          合計抽出時間: <time dateTime={`PT${totalTime}S`}>{formatTime(totalTime, true)}</time>
+          total time: <time dateTime={`PT${totalTime}S`}>{formatTime(totalTime, true)}</time>
         </span>
         <div className="mt-2">
           <span className="text-gray-600 dark:text-gray-400 text-2xl">
-            {currentPour} / {pourCount} 投目
+            pour count: {currentPour} / {pourCount}
           </span>
         </div>
       </div>

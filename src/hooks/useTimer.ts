@@ -11,6 +11,7 @@ export const useTimer = () => {
   const [time, setTime] = useState(45); // 初期値は45秒
   const [totalTime, setTotalTime] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
 
   // 各投数に応じた時間を計算
   const calculateTimeForPour = (pourNumber: number) => {
@@ -25,9 +26,11 @@ export const useTimer = () => {
   // タイマーをリセットする関数
   const resetTimer = () => {
     setCurrentPour(1);
-    setTime(calculateTimeForPour(1)); // 1投目の時間を計算
+    setTime(calculateTimeForPour(1));
     setHasStarted(false);
     setIsRunning(false);
+    setIsFinished(false);
+    setTotalTime(0);
   };
 
   useEffect(() => {
@@ -39,7 +42,11 @@ export const useTimer = () => {
           if (prevTime <= 0) {
             setIsRunning(false);
             const nextPour = currentPour + 1;
-            const newPour = nextPour > pourCount ? 1 : nextPour;
+            if (nextPour > pourCount) {
+              setIsFinished(true);
+              return 0;
+            }
+            const newPour = nextPour;
             setCurrentPour(newPour);
             setTime(calculateTimeForPour(newPour));
             return 0;
@@ -76,12 +83,13 @@ export const useTimer = () => {
     if (isTotalTime) {
       const minutes = Math.floor(seconds / 60);
       const remainingSeconds = seconds % 60;
-      return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+      return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
-    return seconds.toString().padStart(2, '0');
+    return seconds.toString();
   };
 
   const toggleTimer = () => {
+    console.log(hasStarted, isRunning);
     if (!hasStarted) {
       setHasStarted(true);
     }
@@ -97,5 +105,6 @@ export const useTimer = () => {
     currentPour,
     resetTimer,
     pourCount,
+    isFinished,
   };
 }; 
