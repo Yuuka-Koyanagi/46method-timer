@@ -11,23 +11,20 @@ const useTimer = () => {
     timerRef.current = null;
   };
 
-  const countDown = (currentTime = time) => {
-    if (currentTime <= 0) {
-      setIsRunning(false);
-      return;
-    };
+  const performCountStep = async (nextTime: number) => {
+    setTime(nextTime);
+    await new Promise(resolve => timerRef.current = setTimeout(resolve, 1000));
+  };
 
-    timerRef.current = setTimeout(() => {
-      const nextTime = currentTime - 1;
-      setTime(nextTime);
-      countDown(nextTime);
-    }, 1000);
+  const startTimer = async (startTime = time) => {
+    for (let i = startTime; i >= 0; i--) await performCountStep(i);
+    setIsRunning(false);
   };
 
   const handleTogglePause = () => setIsRunning(prev => !prev);
 
   useEffect(() => {
-    if (isRunning && !timerRef.current) countDown();
+    if (isRunning && !timerRef.current && time > 0) startTimer();
     return () => clearTimer();
   }, [isRunning]);
 
