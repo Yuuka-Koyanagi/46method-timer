@@ -6,10 +6,9 @@ const Home = () => {
   const { time, handleTogglePause } = useTimer();
 
   return (
-    <>
-      <div>{time}</div>
-      <button onClick={handleTogglePause}>Start</button>
-    </>
+    <main className="flex justify-center items-center h-screen">
+      <div className="text-9xl font-bold" onClick={handleTogglePause}>{time}</div>
+    </main>
   );
 }
 
