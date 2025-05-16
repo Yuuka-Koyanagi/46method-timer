@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const useTimer = () => {
+export const useTimer = () => {
   const [time, setTime] = useState(10);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [isRunning, setIsRunning] = useState(false);
@@ -30,5 +30,3 @@ const useTimer = () => {
 
   return { time, handleTogglePause };
 };
-
-export { useTimer };
