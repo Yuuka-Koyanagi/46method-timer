@@ -6,29 +6,30 @@ const Home = () => {
   const { time, handleTogglePause } = useTimer();
 
   return (
-    <>
-      <main className="min-h-screen flex flex-col justify-center items-center gap-6">
+    <div className="flex flex-col min-h-screen justify-center gap-40">
+      <main className="flex flex-col items-center gap-4">
         <div className="text-9xl font-bold" onClick={handleTogglePause}>{time}</div>
         <div>{time > 0 ? "_".repeat(time) : "Happy brewing! ☕️"}</div>
       </main>
 
-      <dl className="min-h-screen flex flex-col justify-center items-center text-2xl gap-6">
-        <div className="grid grid-cols-2 gap-6 w-full max-w-md">
-          <dt className="font-semibold">抽出メソッド</dt>
-          <dd>4:6メソッド</dd>
-        </div>
+      <div className="flex flex-col self-center w-50 gap-10">
+        <button className="rounded-md bg-blue-500 text-white w-full self-center">4:6メソッド</button>
 
-        <div className="grid grid-cols-2 gap-6 w-full max-w-md">
-          <dt className="font-semibold">注湯回数</dt>
-          <dd>5回</dd>
-        </div>
+        <dl className="grid grid-cols-2 gap-y-4">
+          <dt className="font-semibold" id="pour-count">注湯回数</dt>
+          <dd className="flex justify-end">
+            <input className="text-right" type="number" id="pour-count" value={5} onChange={e => setValue(e.target.value)} />
+            <span>回</span>
+          </dd>
 
-        <div className="grid grid-cols-2 gap-6 w-full max-w-md">
-          <dt className="font-semibold">抽出量</dt>
-          <dd>300ml</dd>
-        </div>
-      </dl>
-    </>
+          <dt className="font-semibold" id="ml">抽出量</dt>
+          <dd className="flex justify-end">
+            <input className="text-right" type="number" id="pour-count" value={100} onChange={e => setValue(e.target.value)} />
+            <span>ml</span>
+          </dd>
+        </dl>
+      </div>
+    </div>
   );
 }
 
