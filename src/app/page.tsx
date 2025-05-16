@@ -13,18 +13,18 @@ const Home = () => {
       </main>
 
       <dl className="min-h-screen flex flex-col justify-center items-center text-2xl gap-6">
-        <div className="flex gap-6">
-          <dt>抽出メソッド</dt>
+        <div className="grid grid-cols-2 gap-6 w-full max-w-md">
+          <dt className="font-semibold">抽出メソッド</dt>
           <dd>4:6メソッド</dd>
         </div>
 
-        <div className="flex gap-6">
-          <dt>注湯回数</dt>
+        <div className="grid grid-cols-2 gap-6 w-full max-w-md">
+          <dt className="font-semibold">注湯回数</dt>
           <dd>5回</dd>
         </div>
 
-        <div className="flex gap-6">
-          <dt>抽出量</dt>
+        <div className="grid grid-cols-2 gap-6 w-full max-w-md">
+          <dt className="font-semibold">抽出量</dt>
           <dd>300ml</dd>
         </div>
       </dl>
