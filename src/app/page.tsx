@@ -18,15 +18,15 @@ const Home = () => {
         <button className="rounded-md bg-blue-500 text-white w-full self-center">4:6メソッド</button>
 
         <dl className="grid grid-cols-2 gap-y-4">
-          <dt className="font-semibold" id="pour-count">注湯回数</dt>
+          <dt className="font-semibold">注湯回数</dt>
           <dd className="flex justify-end">
-            <input className="text-right w-full" type="number" id="pour-count" value={pourCount} onChange={handlePourCountChange} />
+            <input className="text-right w-full" type="number" value={pourCount} onChange={handlePourCountChange} />
             <span>回</span>
           </dd>
 
-          <dt className="font-semibold" id="ml">抽出量</dt>
+          <dt className="font-semibold">抽出量</dt>
           <dd className="flex justify-end">
-            <input className="text-right w-full" type="number" id="pour-count" value={brewVolume} onChange={handleBrewVolumeChange} />
+            <input className="text-right w-full" type="number" value={brewVolume} onChange={handleBrewVolumeChange} />
             <span>ml</span>
           </dd>
         </dl>
