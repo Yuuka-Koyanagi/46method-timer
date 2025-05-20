@@ -1,9 +1,11 @@
 'use client';
 
 import { useTimer } from "@/hooks/useTimer";
+import { useSetting } from "@/hooks/useSetting";
 
 const Home = () => {
   const { time, handleTogglePause } = useTimer();
+  const { pourCount, brewVolume, handlePourCountChange, handleBrewVolumeChange } = useSetting();
 
   return (
     <div className="flex flex-col min-h-screen justify-center gap-40">
@@ -18,13 +20,13 @@ const Home = () => {
         <dl className="grid grid-cols-2 gap-y-4">
           <dt className="font-semibold" id="pour-count">注湯回数</dt>
           <dd className="flex justify-end">
-            <input className="text-right" type="number" id="pour-count" value={5} onChange={e => setValue(e.target.value)} />
+            <input className="text-right" type="number" id="pour-count" value={pourCount} onChange={handlePourCountChange} />
             <span>回</span>
           </dd>
 
           <dt className="font-semibold" id="ml">抽出量</dt>
           <dd className="flex justify-end">
-            <input className="text-right" type="number" id="pour-count" value={100} onChange={e => setValue(e.target.value)} />
+            <input className="text-right" type="number" id="pour-count" value={brewVolume} onChange={handleBrewVolumeChange} />
             <span>ml</span>
           </dd>
         </dl>
